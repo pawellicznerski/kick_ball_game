@@ -18,8 +18,8 @@
 }
 
 .ball_wrapper{
-  width: 35px;
-  height: 35px;
+  width: 65px;
+  height: 65px;
   background-color: red;
   border-radius: 1px solid red;
   border-radius: 50%;
