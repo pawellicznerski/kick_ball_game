@@ -11,6 +11,10 @@
   border-right:10px solid black;
   background-color: yellow;
   position:relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .ball_wrapper{
@@ -20,4 +24,15 @@
   border-radius: 1px solid red;
   border-radius: 50%;
   position: absolute;
+  /*top: -10%;
+  left: 50%;*/
+}
+
+.main_button{
+  width: 200px;
+  height: 80px;
+
+}
+.main_button_hidden{
+  display:none;
 }

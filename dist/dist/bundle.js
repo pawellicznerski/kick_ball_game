@@ -62,7 +62,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "67d386d8c74ca018e578"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "292c579caa8d5364d68f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -771,7 +771,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"*{\\n  box-sizing:border-box;\\n  margin: 0;\\n  padding: 0;\\n}\\n\\n.wrapper{\\n  width:100%;\\n  height:100vh;\\n  border-left:10px solid black;\\n  border-right:10px solid black;\\n  background-color: yellow;\\n  position:relative;\\n}\\n\\n.ball_wrapper{\\n  width: 35px;\\n  height: 35px;\\n  background-color: red;\\n  border-radius: 1px solid red;\\n  border-radius: 50%;\\n  position: absolute;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/style.css?./node_modules/css-loader");
+eval("exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"*{\\n  box-sizing:border-box;\\n  margin: 0;\\n  padding: 0;\\n}\\n\\n.wrapper{\\n  width:100%;\\n  height:100vh;\\n  border-left:10px solid black;\\n  border-right:10px solid black;\\n  background-color: yellow;\\n  position:relative;\\n  display: flex;\\n  justify-content: center;\\n  align-items: center;\\n\\n}\\n\\n.ball_wrapper{\\n  width: 35px;\\n  height: 35px;\\n  background-color: red;\\n  border-radius: 1px solid red;\\n  border-radius: 50%;\\n  position: absolute;\\n  /*top: -10%;\\n  left: 50%;*/\\n}\\n\\n.main_button{\\n  width: 200px;\\n  height: 80px;\\n\\n}\\n.main_button_hidden{\\n  display:none;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/style.css?./node_modules/css-loader");
 
 /***/ }),
 
@@ -841,18 +841,6 @@ eval("module.exports = function(module) {\r\n\tif (!module.webpackPolyfill) {\r\
 
 /***/ }),
 
-/***/ "./src/ball.js":
-/*!*********************!*\
-  !*** ./src/ball.js ***!
-  \*********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = ball;\n\nfunction ball() {\n  var ball = document.createElement('div');\n  ball.classList.add('ball_wrapper');\n  return ball;\n}\n\n//# sourceURL=webpack:///./src/ball.js?");
-
-/***/ }),
-
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -861,7 +849,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _lodash = _interopRequireDefault(__webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\"));\n\n__webpack_require__(/*! ./style.css */ \"./src/style.css\");\n\nvar _ball = _interopRequireDefault(__webpack_require__(/*! ./ball.js */ \"./src/ball.js\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction component() {\n  var element = document.createElement('div');\n  element.classList.add('wrapper');\n  element.appendChild((0, _ball.default)());\n  return element;\n}\n\ndocument.body.appendChild(component());\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("\n\nvar _lodash = _interopRequireDefault(__webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\"));\n\n__webpack_require__(/*! ./style.css */ \"./src/style.css\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// import ball from './ball.js';\nfunction component() {\n  var element = document.createElement('div');\n  var button = document.createElement('button');\n  element.classList.add('wrapper');\n  element.appendChild(ball());\n  element.appendChild(button);\n  button.classList.add('main_button');\n  button.innerHTML = 'START';\n  button.addEventListener('click', startPlaying); // element.appendChild(button);\n\n  return element;\n}\n\nfunction startPlaying() {\n  var child = document.getElementsByClassName('main_button');\n  var parent = child[0].parentNode;\n  parent.removeChild(child[0]);\n  fallingBall();\n}\n\nfunction fallingBall() {\n  var child = document.getElementsByClassName('ball_wrapper'); // console.log(window.innerHeight-35);\n\n  var sth = 0;\n  var id = setInterval(movingBall, 3);\n\n  function movingBall() {\n    console.log(sth);\n\n    if (sth < window.innerHeight - 35) {\n      child[0].setAttribute(\"style\", \"left:45%;top:\".concat(sth, \"px;\"));\n      sth++;\n    } else {\n      clearInterval(id);\n      var button = document.createElement('button');\n      var element = document.getElementsByClassName('wrapper');\n      console.log(element);\n      button.classList.add('main_button');\n      button.innerHTML = 'START';\n      button.addEventListener('click', startPlaying);\n      element[0].appendChild(button);\n    }\n  }\n}\n\nfunction stopFalling() {\n  clearInterval(initialInterval);\n}\n\nfunction ball() {\n  var ball = document.createElement('div');\n  ball.classList.add('ball_wrapper');\n  ball.setAttribute(\"style\", \"left:45%;top:0px;\");\n  return ball;\n}\n\ndocument.body.appendChild(component());\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
