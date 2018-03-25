@@ -12,6 +12,7 @@ class Ball{
     this.speed=1;
     this.direction=this.speed*1;
     this.kick=false;
+    this.score=false;
   }
 }
 const initialX=60;
@@ -30,6 +31,13 @@ function component() {
   button.innerHTML='START';
   button.addEventListener('click',startPlaying);
   element.appendChild(button);
+
+  const score = document.createElement('div');
+  score.classList.add('score');
+  score.innerHTML=`Score: `+0;
+  element.appendChild(score);
+
+
   return element;
 }
 
@@ -38,20 +46,35 @@ function startPlaying(){
   const parent = child[0].parentNode;
   parent.removeChild(child[0]);
 
+  ball4.score=0;
+
   const ballEl =document.getElementsByClassName('ball_wrapper');
   console.log(ballEl.length);
   if(ballEl.length>0){
     ballEl[0].addEventListener('click',kickBall);
   } else{
     parent.appendChild(createBall());
-  }
+  };
 
-  ;
-  kickBall()
+  const text =document.getElementsByClassName('text');
+  if(text.length>0){
+    const textParent = text[0].parentNode;
+    textParent.removeChild(text[0]);
+  };
+
+  kickBall(false)
+}
+
+function incrementScore(val){
+  ball4.score=val?ball4.score+1:0;
+  const score = document.getElementsByClassName('score');
+  score[0].innerHTML=`Score: ${ball4.score}`;
 }
 
 
-function kickBall(){
+function kickBall(val){
+  // console.log(ball4.score);
+  incrementScore(val);
   const kick = ball4.kick;
   ball4.kick= !ball4.kick
 
@@ -60,7 +83,7 @@ function kickBall(){
   const child = document.getElementsByClassName('ball_wrapper');
   const ballYAngle = ball4.top;
   // console.log('ballYAngle',ballYAngle);
-  const xlengthOnCCS = Math.floor(window.innerWidth*((Math.random()*0.2)+0.5));
+  const xlengthOnCCS = Math.floor(window.innerWidth*((Math.random()*0.2)+1));
   const ylengthOnCCS= 2*xlengthOnCCS/Math.PI;
   // console.log('ylengthOnCCS',ylengthOnCCS,"xlengthOnCCS",xlengthOnCCS);
   const xlengthOnCCSinPI = Math.PI/xlengthOnCCS;
@@ -80,7 +103,7 @@ function kickBall(){
       // console.log("xInPiForSinFn",xInPiForSinFn);
     } else{
       clearInterval(id);
-      createStartBtn();
+      showGameOverInfo();
     }
   }// end of movingBall
 }
@@ -96,6 +119,17 @@ function strong(n) {
       let result = (n * strong(n-1) );
       return result
    }
+}
+function showGameOverInfo(){
+  const element = document.getElementsByClassName('wrapper');
+  // const gameOverInfo = document.createElement('div');
+  // element.appendChild(gameOverInfo);
+
+  const text = document.createElement('p');
+  text.classList.add('text');
+  text.innerText=`Game over. Your score is ${ball4.score}`;
+  element[0].appendChild(text);
+  createStartBtn();
 }
 
 function createStartBtn(){
