@@ -8,9 +8,9 @@
 .wrapper{
   max-width:100%;
   height:100vh;
-  border-left:20px solid black;
-  border-right:20px solid black;
-  /*border-bottom:26px solid green;*/
+  border-left:70px solid black;
+  border-right:70px solid black;
+  border-bottom:85px solid black;
   background-color: yellow;
   position:relative;
   display: flex;
@@ -21,14 +21,15 @@
 }
 
 .ball_wrapper{
-  width: 140px;
-  height: 140px;
+  width: 210px;
+  height: 210px;
   background-color: rgba(0,0,0,0);
   position: absolute;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+  /*border:1px solid red;*/
 }
 
 .inner-ball_wrapper{

@@ -42,13 +42,13 @@ module.exports = {
       ]
     },
     plugins: [
-      // new CleanWebpackPlugin(['dist']),
+      new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
         title: 'Hot Module Replacement',
         hash: true,
         filename: './dist/index.html'
       }),
-      // new webpack.NamedModulesPlugin(),
+      new webpack.NamedModulesPlugin(),
       new webpack.HotModuleReplacementPlugin()
     ]
 };

@@ -1,9 +1,6 @@
 import _ from 'lodash';
 import './style.css';
-// import ball from './ball.js';
-// document.addEventListener('click',function(e){
-//   console.log(e.clientX);
-// })
+
 class Ball{
   constructor(top,left,height){
     this.top=top;
@@ -15,11 +12,9 @@ class Ball{
     this.score=false;
   }
 }
-const initialX=60;
-const initialY=45;
-// const w=window.innerHeight-110;
-// const q=window.innerWidth/2-55;
 
+const initialX=60;
+const initialY=245;
 let ball4 = new Ball(initialX,initialY,0);
 
 function component() {
@@ -28,7 +23,7 @@ function component() {
   // console.log(element);
   const button = document.createElement('button');
   button.classList.add('main_button');
-  button.innerHTML='START';
+  button.innerHTML='PLAY A NEW GAME';
   button.addEventListener('click',startPlaying);
   element.appendChild(button);
 
@@ -83,19 +78,21 @@ function kickBall(val){
   const child = document.getElementsByClassName('ball_wrapper');
   const ballYAngle = ball4.top;
   // console.log('ballYAngle',ballYAngle);
-  const xlengthOnCCS = Math.floor(window.innerWidth*((Math.random()*0.2)+1));
-  const ylengthOnCCS= 2*xlengthOnCCS/Math.PI;
+  const xlengthOnCCS = Math.floor(window.innerWidth*((Math.random()*0.5)+0.2));
+  const ylengthOnCCS= 1.6*xlengthOnCCS/Math.PI;
   // console.log('ylengthOnCCS',ylengthOnCCS,"xlengthOnCCS",xlengthOnCCS);
   const xlengthOnCCSinPI = Math.PI/xlengthOnCCS;
   let xInPiForSinFn=0;
-  const id = setInterval(movingBall,10);
+  const id = setInterval(movingBall,5);
   function movingBall(){
-    if(child[0].offsetLeft+130>=window.innerWidth||child[0].offsetLeft<=-20){
+    console.log(child[0].offsetLeft);
+    console.log(window.innerWidth);
+    if(child[0].offsetLeft+280>=window.innerWidth||child[0].offsetLeft<=-70){
       ball4.direction = ball4.direction*(-1);
     }
     if(ball4.kick===kick){
       clearInterval(id);
-    } else if(ball4.top<window.innerHeight-125){
+    } else if(ball4.top<window.innerHeight-228){
       ball4.left = ball4.left + ball4.direction;
       ball4.top = ballYAngle-(ylengthOnCCS*sinThirdGrade(xInPiForSinFn));
       child[0].setAttribute("style",`left:${ball4.left}px;top:${ball4.top}px;`);
@@ -155,8 +152,6 @@ function stopFalling(){
 
 
 function createBall() {
-  // console.log(document.getElementsByClassName('ball_wrapper'));
-
   const ball = document.createElement('div');
   ball.addEventListener('click',kickBall);
   ball.classList.add('ball_wrapper');
