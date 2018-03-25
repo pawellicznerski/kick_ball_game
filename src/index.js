@@ -13,9 +13,6 @@ class Ball{
     this.direction=this.speed*1;
     this.kick=false;
   }
-  giveTop(){
-    return this.top;
-  }
 }
 
 let ball4 = new Ball(360,60,0);
@@ -45,6 +42,8 @@ function kickBall(){
   const kick = ball4.kick;
   ball4.kick= !ball4.kick
 
+  ball4.direction= Math.random()-0.5<=0?-1:1;
+
   const child = document.getElementsByClassName('ball_wrapper');
   const ballYAngle = ball4.top;
   // console.log('ballYAngle',ballYAngle);
@@ -52,7 +51,7 @@ function kickBall(){
   const ylengthOnCCS= 2*xlengthOnCCS/Math.PI;
   // console.log('ylengthOnCCS',ylengthOnCCS,"xlengthOnCCS",xlengthOnCCS);
   const xlengthOnCCSinPI = Math.PI/xlengthOnCCS;
-  let mathSinValue=0;
+  let xInPiForSinFn=0;
   const id = setInterval(movingBall,10);
   function movingBall(){
     if(child[0].offsetLeft+130>=window.innerWidth||child[0].offsetLeft<=-20){
@@ -60,12 +59,12 @@ function kickBall(){
     }
     if(ball4.kick===kick){
       clearInterval(id);
-    } else if(ball4.top<window.innerHeight-114){
+    } else if(ball4.top<window.innerHeight-112){
       ball4.left = ball4.left + ball4.direction;
-      ball4.top = ballYAngle-(ylengthOnCCS*sinThirdGrade(mathSinValue));
+      ball4.top = ballYAngle-(ylengthOnCCS*sinThirdGrade(xInPiForSinFn));
       child[0].setAttribute("style",`left:${ball4.left}px;top:${ball4.top}px;`);
-      mathSinValue=mathSinValue+xlengthOnCCSinPI;
-      console.log("mathSinValue",mathSinValue);
+      xInPiForSinFn=xInPiForSinFn+xlengthOnCCSinPI;
+      // console.log("xInPiForSinFn",xInPiForSinFn);
     } else{
       clearInterval(id);
       createStartBtn();
