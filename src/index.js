@@ -14,13 +14,16 @@ class Ball{
     this.kick=false;
   }
 }
+const initialX=60;
+const initialY=45;
+// const w=window.innerHeight-110;
+// const q=window.innerWidth/2-55;
 
-let ball4 = new Ball(360,60,0);
+let ball4 = new Ball(initialX,initialY,0);
 
 function component() {
   const element = document.createElement('div');
   element.classList.add('wrapper');
-  element.appendChild(ball());
   // console.log(element);
   const button = document.createElement('button');
   button.classList.add('main_button');
@@ -34,6 +37,16 @@ function startPlaying(){
   const child = document.getElementsByClassName('main_button');
   const parent = child[0].parentNode;
   parent.removeChild(child[0]);
+
+  const ballEl =document.getElementsByClassName('ball_wrapper');
+  console.log(ballEl.length);
+  if(ballEl.length>0){
+    ballEl[0].addEventListener('click',kickBall);
+  } else{
+    parent.appendChild(createBall());
+  }
+
+  ;
   kickBall()
 }
 
@@ -47,7 +60,7 @@ function kickBall(){
   const child = document.getElementsByClassName('ball_wrapper');
   const ballYAngle = ball4.top;
   // console.log('ballYAngle',ballYAngle);
-  const xlengthOnCCS = Math.floor(window.innerWidth*((Math.random()*0.5)+1));
+  const xlengthOnCCS = Math.floor(window.innerWidth*((Math.random()*0.2)+0.5));
   const ylengthOnCCS= 2*xlengthOnCCS/Math.PI;
   // console.log('ylengthOnCCS',ylengthOnCCS,"xlengthOnCCS",xlengthOnCCS);
   const xlengthOnCCSinPI = Math.PI/xlengthOnCCS;
@@ -59,7 +72,7 @@ function kickBall(){
     }
     if(ball4.kick===kick){
       clearInterval(id);
-    } else if(ball4.top<window.innerHeight-112){
+    } else if(ball4.top<window.innerHeight-125){
       ball4.left = ball4.left + ball4.direction;
       ball4.top = ballYAngle-(ylengthOnCCS*sinThirdGrade(xInPiForSinFn));
       child[0].setAttribute("style",`left:${ball4.left}px;top:${ball4.top}px;`);
@@ -92,6 +105,13 @@ function createStartBtn(){
   button.innerHTML='START';
   button.addEventListener('click',startPlaying);
   element[0].appendChild(button);
+
+  const ball = document.getElementsByClassName('ball_wrapper');
+  ball[0].removeEventListener('click',kickBall);
+
+  ball4.top=initialY;
+  ball4.left=initialX;
+
 }
 
 function stopFalling(){
@@ -100,7 +120,9 @@ function stopFalling(){
 
 
 
-function ball() {
+function createBall() {
+  // console.log(document.getElementsByClassName('ball_wrapper'));
+
   const ball = document.createElement('div');
   ball.addEventListener('click',kickBall);
   ball.classList.add('ball_wrapper');
