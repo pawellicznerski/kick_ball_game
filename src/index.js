@@ -11,14 +11,14 @@ class Ball{
     this.high=height;
     this.speed=1;
     this.direction=this.speed*1;
+    this.kick=false;
   }
   giveTop(){
     return this.top;
   }
 }
 
-let ball4 = new Ball(160,60,0);
-// console.log("from ball4",ball4.giveTop());
+let ball4 = new Ball(360,60,0);
 
 function component() {
   const element = document.createElement('div');
@@ -34,65 +34,46 @@ function component() {
 }
 
 function startPlaying(){
-  // ball4.left=0;
-  // ball4.top=0;
   const child = document.getElementsByClassName('main_button');
   const parent = child[0].parentNode;
   parent.removeChild(child[0]);
-  // kickBall();
+  kickBall()
 }
 
 
-function kickBall(e){
+function kickBall(){
+  const kick = ball4.kick;
+  ball4.kick= !ball4.kick
+
   const child = document.getElementsByClassName('ball_wrapper');
-
-  // const ballXAngle = e.clientX-e.layerX;
   const ballYAngle = ball4.top;
-  console.log('ballYAngle',ballYAngle);
+  // console.log('ballYAngle',ballYAngle);
   const xlengthOnCCS = Math.floor(window.innerWidth*((Math.random()*0.5)+1));
-  // const minXvalueOnCCS =ballXAngle-xlengthOnCCS*0.3;
-  // const begininOfCCS = minXvalueOnCCS+((ballXAngle-minXvalueOnCCS)*Math.random());
-  // const xValueOnCCS= ballXAngle-begininOfCCS;
-  // const valForMathSin =xValueOnCCS/xlengthOnCCS;
-  // const initialX = valForMathSin?valForMathSin*Math.PI:0;
-  // console.log('initialX',initialX);
-  // console.log("clientX",e.clientX,'e.layerX',e.layerX,"ballXAngle",ballXAngle);
-  // console.log("xlengthOnCCS",xlengthOnCCS);
-  // console.log("minXvalueOnCCS",minXvalueOnCCS);
   const ylengthOnCCS= 2*xlengthOnCCS/Math.PI;
-  console.log('ylengthOnCCS',ylengthOnCCS,"xlengthOnCCS",xlengthOnCCS);
-
-
-  // console.log("begininOfCCS",begininOfCCS);
-  // console.log("xValueOnCCS",xValueOnCCS);
-  // console.log('valForMathSin',valForMathSin);
-  // const speed = 1;
-  const lengthPiIdxX = Math.PI/xlengthOnCCS;
-  // const lengthPiIdxXPlus = lengthPiIdxX;
+  // console.log('ylengthOnCCS',ylengthOnCCS,"xlengthOnCCS",xlengthOnCCS);
+  const xlengthOnCCSinPI = Math.PI/xlengthOnCCS;
   let mathSinValue=0;
   const id = setInterval(movingBall,10);
-  // let direction =1;
   function movingBall(){
-    if(child[0].offsetLeft+71>=window.innerWidth||child[0].offsetLeft==0){
+    if(child[0].offsetLeft+130>=window.innerWidth||child[0].offsetLeft<=-20){
       ball4.direction = ball4.direction*(-1);
-    } 
-    if(ball4.top<window.innerHeight-60){
+    }
+    if(ball4.kick===kick){
+      clearInterval(id);
+    } else if(ball4.top<window.innerHeight-114){
       ball4.left = ball4.left + ball4.direction;
-      ball4.top = ballYAngle-(ylengthOnCCS*sinFifthGrade(mathSinValue));
-      // console.log('ball4.top ',ball4.top );
-      // // console.log('ylengthOnCCS',ylengthOnCCS,"xlengthOnCCS",xlengthOnCCS);
-      // console.log('sinFifthGrade(mathSinValue)',sinFifthGrade(mathSinValue));
+      ball4.top = ballYAngle-(ylengthOnCCS*sinThirdGrade(mathSinValue));
       child[0].setAttribute("style",`left:${ball4.left}px;top:${ball4.top}px;`);
-      mathSinValue=mathSinValue+lengthPiIdxX;
+      mathSinValue=mathSinValue+xlengthOnCCSinPI;
       console.log("mathSinValue",mathSinValue);
-    } else {
+    } else{
       clearInterval(id);
       createStartBtn();
     }
-  }
+  }// end of movingBall
 }
 
-function sinFifthGrade(x){
+function sinThirdGrade(x){
   return x-(Math.pow(x,3)/strong(3))-(Math.pow(x,5)/strong(5))
 }
 
@@ -125,6 +106,9 @@ function ball() {
   ball.addEventListener('click',kickBall);
   ball.classList.add('ball_wrapper');
   ball.setAttribute("style",`left:${ball4.left}px;top:${ball4.top}px;`)
+  const innerBall = document.createElement('div');
+  innerBall.classList.add("inner-ball_wrapper");
+  ball.appendChild(innerBall);
   return ball;
 }
 
