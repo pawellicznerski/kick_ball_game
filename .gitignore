@@ -4,4 +4,4 @@
 # production
 /build
 
-*hot-update.json
+/hot

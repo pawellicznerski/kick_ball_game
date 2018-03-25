@@ -31,8 +31,6 @@ function component() {
   score.classList.add('score');
   score.innerHTML=`Score: `+0;
   element.appendChild(score);
-
-
   return element;
 }
 
@@ -69,6 +67,8 @@ function incrementScore(val){
 
 function kickBall(val){
   // console.log(ball4.score);
+
+  const fdfd= 0;
   incrementScore(val);
   const kick = ball4.kick;
   ball4.kick= !ball4.kick
@@ -87,7 +87,7 @@ function kickBall(val){
   function movingBall(){
     console.log(child[0].offsetLeft);
     console.log(window.innerWidth);
-    if(child[0].offsetLeft+280>=window.innerWidth||child[0].offsetLeft<=-70){
+    if(child[0].offsetLeft+281>=window.innerWidth||child[0].offsetLeft<=-70){
       ball4.direction = ball4.direction*(-1);
     }
     if(ball4.kick===kick){

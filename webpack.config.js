@@ -8,6 +8,8 @@ module.exports = {
   output: {
     filename: './dist/bundle.js',
     // path: path.resolve('dist')
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json'
   },
   devServer: {
       // inline: true,
