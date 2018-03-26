@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import './style.css';
 //creating contructor for ball object
 class Ball{
@@ -71,7 +70,6 @@ function startPlaying(){
 function incrementScore(val){
   ball4.scoreText=val?ball4.scoreText+1:0;
   const scoreText = document.getElementsByClassName('scoreText');
-  console.log(scoreText);
   scoreText[0].innerHTML=`Score: ${ball4.scoreText}`;
 }
 
